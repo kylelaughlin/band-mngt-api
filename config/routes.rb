@@ -5,6 +5,8 @@ Rails.application.routes.draw do
       post 'authenticate', to: 'authentication#authenticate'
       resources :users
       resources :songs
+      resources :bands
+      resources :set_lists
     end
   end
 
