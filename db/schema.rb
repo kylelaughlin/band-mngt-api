@@ -10,10 +10,48 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161123160249) do
+ActiveRecord::Schema.define(version: 20161123202411) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "bands", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "manager_id"
+    t.string   "token"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "set_items", force: :cascade do |t|
+    t.integer  "order"
+    t.integer  "set"
+    t.integer  "song_id"
+    t.integer  "set_list_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["set_list_id"], name: "index_set_items_on_set_list_id", using: :btree
+    t.index ["song_id"], name: "index_set_items_on_song_id", using: :btree
+  end
+
+  create_table "set_lists", force: :cascade do |t|
+    t.string   "name"
+    t.date     "performance_date"
+    t.integer  "band_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.index ["band_id"], name: "index_set_lists_on_band_id", using: :btree
+  end
+
+  create_table "songs", force: :cascade do |t|
+    t.string   "title"
+    t.string   "artist"
+    t.boolean  "active"
+    t.integer  "band_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["band_id"], name: "index_songs_on_band_id", using: :btree
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "first_name"

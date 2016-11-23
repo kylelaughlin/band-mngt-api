@@ -1,0 +1,2 @@
+class SetItem < ApplicationRecord
+end
