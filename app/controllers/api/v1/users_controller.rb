@@ -9,10 +9,10 @@ class Api::V1::UsersController < ApplicationController
     if @user.update_attributes(user_params)
       redner json: @user
     else
-      render json: @user.errors
+      render json: { errors: @user.errors.full_messages }
     end
-
   end
+
 
   private
 
