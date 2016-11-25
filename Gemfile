@@ -19,6 +19,8 @@ gem 'jwt'
 gem 'simple_command'
 # serialize for json responses
 gem 'active_model_serializers'
+#user authotization
+gem 'pundit'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

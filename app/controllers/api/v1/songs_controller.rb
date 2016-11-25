@@ -1,12 +1,16 @@
 class Api::V1::SongsController < ApplicationController
+  before_action :set_song, only: [:show, :update, :destroy]
+  #before_action :authenticate_user!
+
   def index
     @active_songs = Song.active(current_user)
     @inactive_songs = Song.inactive(current_user)
-    render json: { songs: @active_songs }
+    render json: { active_songs: @active_songs, inactive_songs: @inactive_songs }
   end
 
   def create
     @song = Song.new(song_params)
+    authorize @song
     if @song.save
       render json: { songs: @song }
     else
@@ -15,12 +19,12 @@ class Api::V1::SongsController < ApplicationController
   end
 
   def show
-    @song = Song.find(params[:id])
+    authorize @song
     render json: { song: @song }
   end
 
   def update
-    @song = Song.find(params[:id])
+    authorize @song
     if @song.update_attributes(song_params)
       render json: { song: @song }
     else
@@ -32,6 +36,10 @@ class Api::V1::SongsController < ApplicationController
 
   def song_params
     params.require(:song).permit(:title, :artist, :band_id)
+  end
+
+  def set_song
+    @song = Song.find(params[:id])
   end
 
 end
