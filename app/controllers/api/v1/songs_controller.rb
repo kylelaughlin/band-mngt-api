@@ -20,7 +20,7 @@ class Api::V1::SongsController < ApplicationController
 
   def show
     authorize @song
-    render json: { song: @song }
+    render json: @song
   end
 
   def update

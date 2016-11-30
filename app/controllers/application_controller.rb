@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::API
   include Pundit
+  include ActionController::Serialization
 
   before_action :destroy_session
   before_action :authenticate_request
