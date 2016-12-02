@@ -3,6 +3,7 @@ class Api::V1::SongsController < ApplicationController
   #before_action :authenticate_user!
 
   def index
+    @songs = Song.all
     @active_songs = Song.active(current_user)
     @inactive_songs = Song.inactive(current_user)
     render json: { active_songs: @active_songs, inactive_songs: @inactive_songs }

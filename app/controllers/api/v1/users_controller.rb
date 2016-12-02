@@ -1,15 +1,16 @@
 class Api::V1::UsersController < ApplicationController
+
   def show
     @user = current_user
     render json: @user
   end
 
   def update
-    @user = current_user
-    if @user.update_attributes(user_params)
-      redner json: @user
+    command = UpdateUser.call(current_user, user_params, band_token)
+    if command.success?
+      redner json: command.result
     else
-      render json: { errors: @user.errors.full_messages }
+      render json: { errors: command.errors }
     end
   end
 
