@@ -3,9 +3,12 @@ class Api::V1::SetListsController < ApplicationController
   before_action :set_set_list, only: [:show, :update, :destroy]
 
   def index
-    @set_lists_future = SetList.future(current_user)
-    @set_lists_past = SetList.past(current_user)
-    render json: { set_lists: { future: @set_lists_future, past: @set_lists_past}}
+    if params[:past] = true
+      @set_lists = SetList.past(current_user)
+      render json: @set_lists
+    else
+      @set_lists = SetList.future(current_user)
+      render json: @set_lists
   end
 
   def create
